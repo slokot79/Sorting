@@ -16,7 +16,8 @@ namespace SLokot.Sorting
             int L = source.Length;
             if (L <= 1) return;
 
-            long a, bit = long.MinValue;
+            long bit = long.MinValue;
+            long a, mask, next;
             long orL = 0L, andL = -1L;
             long orR = 0L, andR = -1L;
             int i = 0, j = L - 1;
@@ -43,16 +44,28 @@ namespace SLokot.Sorting
                 else break;
             }
 
-            process(A, 0, i, 0x4000000000000000, orL & (andL ^ -1L));
-            process(A, i, L, 0x4000000000000000, orR & (andR ^ -1L));
+            mask = orL & (andL ^ -1L);
+            if (mask != 0L)
+            {
+                next = 0x4000000000000000;
+                while ((next & mask) == 0L)
+                    next >>= 1;
+                process(A, 0, i, next);
+            }
+
+            mask = orR & (andR ^ -1L);
+            if (mask != 0L)
+            {
+                next = 0x4000000000000000;
+                while ((next & mask) == 0L)
+                    next >>= 1;
+                process(A, i, L, next);
+            }
         }
 
-        private static void process(long[] A, int from, int until, long bit, long mask)
+        private static void process(long[] A, int from, int until, long bit)
         {
-            if (mask == 0L) return;
-            while ((bit & mask) == 0L) bit >>= 1;
-
-            long a;
+            long a, mask, next;
             long orL = 0L, andL = -1L;
             long orR = 0L, andR = -1L;
             int i = from, j = until - 1;
@@ -79,9 +92,23 @@ namespace SLokot.Sorting
                 else break;
             }
 
-            process(A, from, i, bit >> 1, orL & (andL ^ -1L));
-            process(A, i, until, bit >> 1, orR & (andR ^ -1L));
-        }
+            mask = orL & (andL ^ -1L);
+            if (mask != 0L)
+            {
+                next = bit >> 1;
+                while ((next & mask) == 0L)
+                    next >>= 1;
+                process(A, from, i, next);
+            }
 
+            mask = orR & (andR ^ -1L);
+            if (mask != 0L)
+            {
+                next = bit >> 1;
+                while ((next & mask) == 0L)
+                    next >>= 1;
+                process(A, i, until, next);
+            }
+        }
     }
 }

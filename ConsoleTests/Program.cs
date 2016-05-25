@@ -10,25 +10,40 @@ namespace SLokot.Sorting
     {
         static void Main(string[] args)
         {
-            long[] A = new long[100000000];
+            long[] A = new long[50000000];
             Random rnd = new Random();
             byte[] numBytes = new byte[8];
+            DateTime start, end;
 
             for (int i = 0; i < A.Length; i++)
             {
                 rnd.NextBytes(numBytes);
                 A[i] = BitConverter.ToInt64(numBytes, 0);
             }
-
-            DateTime start = DateTime.Now;
-            BinaryQuick.sort(A);
-            DateTime end = DateTime.Now;
-            Console.WriteLine((end - start).TotalSeconds);
-
             start = DateTime.Now;
             BinaryQuick.sort(A);
             end = DateTime.Now;
-            Console.WriteLine((end - start).TotalSeconds);
+            Console.WriteLine("Binary: " + (end - start).TotalSeconds);
+
+            for (int i = 0; i < A.Length; i++)
+            {
+                rnd.NextBytes(numBytes);
+                A[i] = BitConverter.ToInt64(numBytes, 0);
+            }
+            start = DateTime.Now;
+            Merge.sort(A);
+            end = DateTime.Now;
+            Console.WriteLine("Merge: " + (end - start).TotalSeconds);
+
+            for (int i = 0; i < A.Length; i++)
+            {
+                rnd.NextBytes(numBytes);
+                A[i] = BitConverter.ToInt64(numBytes, 0);
+            }
+            start = DateTime.Now;
+            Array.Sort(A);
+            end = DateTime.Now;
+            Console.WriteLine("Introsort: " + (end - start).TotalSeconds);
 
             Console.ReadLine();
         }

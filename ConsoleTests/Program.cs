@@ -12,40 +12,43 @@ namespace SLokot.Sorting
 
         static void Main(string[] args)
         {
-            long[] A = new long[268435448]; //268435448
+            long[] A = new long[10000000]; // 268435448 maximum size without memory exception
 
             DateTime start, end;
 
             generate(A);
-            Console.WriteLine("Standard Sort Started");
+            Console.WriteLine("Standard sort started");
             start = DateTime.Now;
             Array.Sort(A);
             end = DateTime.Now;
-            Console.WriteLine("Standard: " + (end - start).TotalSeconds);
+            Console.WriteLine("Standard sort finished in " + (end - start).TotalSeconds + " seconds");
             check(A);
+            Console.WriteLine();
 
             generate(A);
-            Console.WriteLine("Binary Sort Started");
+            Console.WriteLine("Binary sort started");
             start = DateTime.Now;
-            BinaryQuick.sort(A);
+            Binary.Sort(A);
             end = DateTime.Now;
-            Console.WriteLine("Binary: " + (end - start).TotalSeconds);
+            Console.WriteLine("Binary sort finished in " + (end - start).TotalSeconds + " seconds");
             check(A);
+            Console.WriteLine();
 
             generate(A);
-            Console.WriteLine("Merge Sort Started");
+            Console.WriteLine("Merge sort started");
             start = DateTime.Now;
-            Merge.sort(A);
+            Merge.Sort(A);
             end = DateTime.Now;
-            Console.WriteLine("Merge: " + (end - start).TotalSeconds);
+            Console.WriteLine("Merge sort finished in " + (end - start).TotalSeconds + " seconds");
             check(A);
+            Console.WriteLine();
 
             generate(A);
-            Console.WriteLine("Heap Sort Started");
+            Console.WriteLine("Heap sort started");
             start = DateTime.Now;
-            Heap.sort(A);
+            Heap.Sort(A);
             end = DateTime.Now;
-            Console.WriteLine("Heap Sort Done: " + (end - start).TotalSeconds);
+            Console.WriteLine("Heap sort finished in " + (end - start).TotalSeconds + " seconds");
             check(A);
 
             Console.ReadLine();
@@ -66,9 +69,12 @@ namespace SLokot.Sorting
         {
             for (int i = A.Length - 1; i > 0; i -= 1)
                 if (A[i - 1] > A[i])
+                {
                     Console.WriteLine("Sorting error: A[" + (i - 1) + "] = " + A[i - 1] + ", A[" + (i) + "] = " + A[i]);
-
-            Console.WriteLine(".");
+                    return;
+                }
+            Console.WriteLine("Array was sorted correctly");
+            return;
         }
     }
 }

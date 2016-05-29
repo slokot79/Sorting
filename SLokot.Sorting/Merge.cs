@@ -8,10 +8,10 @@ namespace SLokot.Sorting
 {
     public static class Merge
     {
-        public static long[] sort(long[] A)
+        public static void Sort(long[] S)
         {
-            int L = A.Length;
-            long[] B = new long[L], T;
+            int L = S.Length;
+            long[] A = S, B = new long[L], T;
 
             int L0 = L & (-2);
             for (int i = 0; i < L0; i += 2)
@@ -42,40 +42,54 @@ namespace SLokot.Sorting
                 int n = p << 1;
                 while (n < L)
                 {
-                    merge(A, B, b, m, n);
-                    b = n;
+                    int i = b;
+                    int j = m;
+                    while (true)
+                    {
+                        if (i < m && j < n)
+                        {
+                            if (A[j] < A[i])
+                                B[b++] = A[j++];
+                            else B[b++] = A[i++];
+                        }
+                        else if (i < m)
+                            B[b++] = A[i++];
+                        else if (j < n)
+                            B[b++] = A[j++];
+                        else break;
+                    }
                     m = b + p;
                     n = m + p;
                 }
-                if (m < L) merge(A, B, b, m, L);
-                else for (int i = b; i < L; i += 1) B[i] = A[i];
+                if (m < L)
+                {
+                    int i = b;
+                    int j = m;
+                    while (true)
+                    {
+                        if (i < m && j < L)
+                        {
+                            if (A[j] < A[i])
+                                B[b++] = A[j++];
+                            else B[b++] = A[i++];
+                        }
+                        else if (i < m)
+                            B[b++] = A[i++];
+                        else if (j < L)
+                            B[b++] = A[j++];
+                        else break;
+                    }
+                }
+                else do B[b] = A[b];
+                    while (++b < L);
 
                 T = A;
                 A = B;
                 B = T;
             }
-            return A;
-        }
 
-        private static void merge(long[] A, long[] B, int b, int m, int n)
-        {
-            int i = b;
-            int j = m;
-            int k = b;
-            while (true)
-            {
-                if (i < m && j < n)
-                {
-                    if (A[j] < A[i])
-                        B[k++] = A[j++];
-                    else B[k++] = A[i++];
-                }
-                else if (i < m)
-                    B[k++] = A[i++];
-                else if (j < n)
-                    B[k++] = A[j++];
-                else break;
-            }
+            if (A != S)
+                A.CopyTo(S, 0);
         }
     }
 }

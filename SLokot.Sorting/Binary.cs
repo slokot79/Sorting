@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SLokot.Sorting
 {
-    public static class BinaryQuick
+    public static class Binary
     {
-        public static void sort(long[] source)
+        public static void Sort(long[] source)
         {
             long[] A = source;
             if (A == null) return;

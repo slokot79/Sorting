@@ -8,7 +8,7 @@ namespace SLokot.Sorting
 {
     public class Heap
     {
-        public static void sort(long[] A)
+        public static void Sort(long[] A)
         {
             int L = A.Length;
             for (int k = 2; k <= L; k += 1)

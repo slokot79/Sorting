@@ -12,8 +12,28 @@ namespace SLokot.Sorting
         {
             int L = A.Length;
             long[] B = new long[L], T;
+
+            int L0 = L & (-2);
+            for (int i = 0; i < L0; i += 2)
+            {
+                if (A[i] > A[i + 1])
+                {
+                    B[i] = A[i + 1];
+                    B[i + 1] = A[i];
+                }
+                else
+                {
+                    B[i] = A[i];
+                    B[i + 1] = A[i + 1];
+                }
+            }
+            if (L0 != L) B[L0] = A[L0];
+            T = A;
+            A = B;
+            B = T;
+
             int p = 1;
-            while (p < L)
+            while ((p = p << 1) < L)
             {
                 int b = 0;
                 while (true)
@@ -29,11 +49,10 @@ namespace SLokot.Sorting
                     else
                     {
                         if (m < L) for (int i = b, j = m, k = b; k < L; k++)
-                                B[k] = (i == m || (j < L && A[j] < A[i])) ? A[j++] : A[i++];
+                            B[k] = (i == m || (j < L && A[j] < A[i])) ? A[j++] : A[i++];
                         break;
                     }
                 }
-                p <<= 1;
                 T = A;
                 A = B;
                 B = T;

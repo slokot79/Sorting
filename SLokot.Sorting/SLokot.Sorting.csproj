@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BinaryQuick.cs" />
+    <Compile Include="Heap.cs" />
     <Compile Include="Merge.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

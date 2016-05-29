@@ -27,7 +27,9 @@ namespace SLokot.Sorting
                     B[i + 1] = A[i + 1];
                 }
             }
-            if (L0 != L) B[L0] = A[L0];
+            if (L0 != L)
+                B[L0] = A[L0];
+
             T = A;
             A = B;
             B = T;
@@ -36,23 +38,18 @@ namespace SLokot.Sorting
             while ((p = p << 1) < L)
             {
                 int b = 0;
-                while (true)
+                int m = p;
+                int n = p << 1;
+                while (n < L)
                 {
-                    int m = b + p;
-                    int n = m + p;
-                    if (n < L)
-                    {
-                        for (int i = b, j = m, k = b; k < n; k++)
-                            B[k] = (i == m || (j < n && A[j] < A[i])) ? A[j++] : A[i++];
-                        b = n;
-                    }
-                    else
-                    {
-                        if (m < L) for (int i = b, j = m, k = b; k < L; k++)
-                            B[k] = (i == m || (j < L && A[j] < A[i])) ? A[j++] : A[i++];
-                        break;
-                    }
+                    merge(A, B, b, m, n);
+                    b = n;
+                    m = b + p;
+                    n = m + p;
                 }
+                if (m < L) merge(A, B, b, m, L);
+                else for (int i = b; i < L; i += 1) B[i] = A[i];
+
                 T = A;
                 A = B;
                 B = T;
@@ -60,5 +57,25 @@ namespace SLokot.Sorting
             return A;
         }
 
+        private static void merge(long[] A, long[] B, int b, int m, int n)
+        {
+            int i = b;
+            int j = m;
+            int k = b;
+            while (true)
+            {
+                if (i < m && j < n)
+                {
+                    if (A[j] < A[i])
+                        B[k++] = A[j++];
+                    else B[k++] = A[i++];
+                }
+                else if (i < m)
+                    B[k++] = A[i++];
+                else if (j < n)
+                    B[k++] = A[j++];
+                else break;
+            }
+        }
     }
 }

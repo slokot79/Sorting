@@ -12,7 +12,7 @@ namespace SLokot.Sorting
 
         static void Main(string[] args)
         {
-            long[] A = new long[30000]; // 268435448 maximum size without memory exception
+            long[] A = new long[100000]; // 268435448 maximum size without memory exception
 
             DateTime start, end;
 

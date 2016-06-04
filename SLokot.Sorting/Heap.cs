@@ -64,37 +64,6 @@ namespace SLokot.Sorting
                     }
                 }
             }
-            else if (L < 16)
-            {
-                int pos = 0;
-                long min = A[0];
-                for (int k = 1; k < L; k += 1)
-                {
-                    if (A[k] < min)
-                    {
-                        min = A[k];
-                        pos = k;
-                    }
-                }
-                if (pos > 0)
-                {
-                    A[pos] = A[0];
-                    A[0] = min;
-                }
-
-                for (int k = 2; k < L; k += 1)
-                {
-                    int i = k, j = k - 1;
-                    long c = A[i], p;
-                    while (c < (p = A[j]))
-                    {
-                        A[i] = p;
-                        i = j;
-                        j -= 1;
-                    }
-                    A[i] = c;
-                }
-            }
             else
             {
                 int pos = 0;
@@ -165,6 +134,40 @@ namespace SLokot.Sorting
                     else A[1] = t;
                 }
             }
+
+            /* insert sort
+            else if (L < 16)
+            {
+                int pos = 0;
+                long min = A[0];
+                for (int k = 1; k < L; k += 1)
+                {
+                    if (A[k] < min)
+                    {
+                        min = A[k];
+                        pos = k;
+                    }
+                }
+                if (pos > 0)
+                {
+                    A[pos] = A[0];
+                    A[0] = min;
+                }
+
+                for (int k = 2; k < L; k += 1)
+                {
+                    int i = k, j = k - 1;
+                    long c = A[i], p;
+                    while (c < (p = A[j]))
+                    {
+                        A[i] = p;
+                        i = j;
+                        j -= 1;
+                    }
+                    A[i] = c;
+                }
+            }
+            */
         }
     }
 }
